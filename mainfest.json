@@ -1,0 +1,6 @@
+{
+  "name": "add-layers-auto-map-experience-builder",
+  "type": "exb-web-extension-repo",
+  "description": "This is a extension repository that contains the add-layers widget.",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0"
+}
