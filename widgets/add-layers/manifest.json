@@ -4,8 +4,8 @@
     "jimu-arcgis"
   ],
   "type": "widget",
-  "version": "1.2.0",
-  "exbVersion": "1.2.0",
+  "version": "1.5.0",
+  "exbVersion": "1.5.0",
   "author": "Gavin Rehkemper",
   "description": "A version of the add-layers sample (https://developers.arcgis.com/labs/experiencebuilder/add-layers-to-a-map), but does not use a settings panel to pick the Map widget -- instead assumes there will be one map widget on the page and uses it.",
   "copyright": "Gavin Rehkemper",
@@ -15,7 +15,7 @@
     "en"
   ],
   "defaultSize": {
-    "width": 800,
-    "height": 500
+    "width": 100,
+    "height": 80
   }
 }

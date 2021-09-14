@@ -1,17 +1,27 @@
 /** @jsx jsx */
-import { React, AllWidgetProps, jsx, Immutable, ImmutableArray } from 'jimu-core';
-import { JimuMapViewComponent, JimuMapView } from "jimu-arcgis";
+import { React, AllWidgetProps, css, jsx } from "jimu-core";
+import {
+  JimuMapViewComponent,
+  JimuMapView,
+} from "jimu-arcgis";
 
-import FeatureLayer = require('esri/layers/FeatureLayer');
+import FeatureLayer from 'esri/layers/FeatureLayer';
 
-export default class Widget extends React.PureComponent<AllWidgetProps<any>, any> {
-  constructor(props) {
-    super(props);
+interface IState {
+  jimuMapView: JimuMapView;
+}
 
-    this.state = {
-      jimuMapView: null
-    };
-  }
+export default class Widget extends React.PureComponent<
+  AllWidgetProps<any>,
+  IState
+> {
+  // Give types to the modules we import from the ArcGIS API for JavaScript
+  // to tell TypeScript what types they are.
+  FeatureLayer: typeof __esri.FeatureLayer;
+
+  state = {
+    jimuMapView: null,
+  };
 
   activeViewChangeHandler = (jmv: JimuMapView) => {
     if (jmv) {
@@ -23,7 +33,6 @@ export default class Widget extends React.PureComponent<AllWidgetProps<any>, any
 
   formSubmit = evt => {
     evt.preventDefault();
-    console.log('BUTTON CLICKED');
     if (this.state.jimuMapView) {
       const layer = new FeatureLayer({
         url: 'https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads_Styled/FeatureServer/0'
@@ -41,7 +50,7 @@ export default class Widget extends React.PureComponent<AllWidgetProps<any>, any
    * Experience. This works best if you know there will be only a single map 
    * within the Experience.
    */
-  getArbitraryFirstMapWidgetId = (): ImmutableArray<string> => {
+  getArbitraryFirstMapWidgetId = (): string => {
     const appState: any = window._appState;
     // Loop through all the widgets in the config and find the "first"
     // that has the type (uri) of "arcgis-map"
@@ -49,18 +58,14 @@ export default class Widget extends React.PureComponent<AllWidgetProps<any>, any
       return widgetInfo.uri === 'widgets/arcgis/arcgis-map/'
     });
 
-    let useMapWidgetIds = Immutable([]); // empty by default
-    if (arbitraryFirstMapWidgetInfo) {
-      useMapWidgetIds = Immutable([arbitraryFirstMapWidgetInfo.id]);
-    }
-    return useMapWidgetIds;
+    return arbitraryFirstMapWidgetInfo.id;
   }
 
   render() {
     return (
       <div className="widget-demo jimu-widget m-2">
         <JimuMapViewComponent
-          useMapWidgetIds={this.getArbitraryFirstMapWidgetId()}
+          useMapWidgetId={this.getArbitraryFirstMapWidgetId()}
           onActiveViewChange={this.activeViewChangeHandler}
         />
 
